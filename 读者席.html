@@ -7678,6 +7678,16 @@ if (typeof module !== 'undefined') module.exports = RCS_LEXICON;
     const m = E.analyze(w.text);
     if (m.charCount < 80) { toast('稿件太短了，至少给读者 80 字'); return; }
 
+    const counts = new Map();                              // ① 造一本空字典：键=字，值=次数
+    for (const ch of m.text) {                             // ② 把 m.text 逐字取出，每轮 ch 是当前字
+    counts.set(ch, (counts.get(ch) || 0) + 1);           //    查它已记几次(没记过||0兜底)→加1→写回
+    }
+    const topCount = Math.max(...counts.values());         // ③ 所有次数摊开(...spread)，挑最大的
+    
+    //检测是否重复度过高
+    let numble2= m.text.length; 
+    if(topCount/numble2>0.5){toast('稿件重复度过高，请确认输入后重试');return;}
+
     const active = activePersonas(w);
     if (!active.length) { toast('至少留一位读者在场'); return; }
 
@@ -7872,10 +7882,22 @@ if (typeof module !== 'undefined') module.exports = RCS_LEXICON;
 
   async function runFullSuite() {
     if (state.busy) { toast('全套流水线已经在跑'); return; }
+
     const w = work();
     const m = E.analyze(w.text);
     if (m.charCount < 80) { toast('稿件太短了，至少给读者 80 字'); return; }
+
+    const counts = new Map();                              // ① 造一本空字典：键=字，值=次数
+    for (const ch of m.text) {                             // ② 把 m.text 逐字取出，每轮 ch 是当前字
+    counts.set(ch, (counts.get(ch) || 0) + 1);           //    查它已记几次(没记过||0兜底)→加1→写回
+    }
+    const topCount = Math.max(...counts.values());         // ③ 所有次数摊开(...spread)，挑最大的
+    //检测是否重复度过高
+    let numble2= m.text.length; 
+    if(topCount/numble2>0.5){toast('稿件重复度过高，请确认输入后重试');return;}
+
     const active = activePersonas(w);
+
     if (!active.length) { toast('至少留一位读者在场'); return; }
 
     ensureChatView();
