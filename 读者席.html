@@ -7688,6 +7688,15 @@ if (typeof module !== 'undefined') module.exports = RCS_LEXICON;
     let numble2= m.text.length; 
     if(topCount/numble2>0.5){toast('稿件重复度过高，请确认输入后重试');return;}
 
+    //检测第一层——检测中文占比
+    let counts2 = 0;
+     for (const ch of m.text) {
+      if (/[\u4e00-\u9fa5]/.test(ch)) {                             // ② 把 m.text 逐字取出，每轮 ch 是当前字
+         counts2++;                                                 //检测中文字符数
+    }
+  }
+    if(counts2/numble2<0.08){toast('稿件中文字符占比过低，请确认输入后重试');return;}
+
     const active = activePersonas(w);
     if (!active.length) { toast('至少留一位读者在场'); return; }
 
@@ -7895,6 +7904,15 @@ if (typeof module !== 'undefined') module.exports = RCS_LEXICON;
     //检测是否重复度过高
     let numble2= m.text.length; 
     if(topCount/numble2>0.5){toast('稿件重复度过高，请确认输入后重试');return;}
+
+    //检测第一层——检测中文占比
+    let counts2 = 0;
+     for (const ch of m.text) {
+      if (/[\u4e00-\u9fa5]/.test(ch)) {                             // ② 把 m.text 逐字取出，每轮 ch 是当前字
+         counts2++;                                                 //检测中文字符数
+    }
+  }
+    if(counts2/numble2<0.08){toast('稿件中文字符占比过低，请确认输入后重试');return;}
 
     const active = activePersonas(w);
 
