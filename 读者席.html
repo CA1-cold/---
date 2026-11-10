@@ -7688,6 +7688,8 @@ if (typeof module !== 'undefined') module.exports = RCS_LEXICON;
     let numble2= m.text.length; 
     if(topCount/numble2>0.5){toast('稿件重复度过高，请确认输入后重试');return;}
 
+   
+
     const active = activePersonas(w);
     if (!active.length) { toast('至少留一位读者在场'); return; }
 
@@ -7895,6 +7897,8 @@ if (typeof module !== 'undefined') module.exports = RCS_LEXICON;
     //检测是否重复度过高
     let numble2= m.text.length; 
     if(topCount/numble2>0.5){toast('稿件重复度过高，请确认输入后重试');return;}
+
+   // TODO 中文占比岗哨
 
     const active = activePersonas(w);
 
